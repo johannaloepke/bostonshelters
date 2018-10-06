@@ -2,6 +2,9 @@
 	{
 		"name": "Harvard Square Homeless Shelter",
 		"type_emergency": "true",
+        "type_transitional": "true",
+        "type_domesticviolence": "false",
+        "type_permanent": "false",
 		"sober": "true",
 		"not_sober": "false",
 		"gender_male": "true",
