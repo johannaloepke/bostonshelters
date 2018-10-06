@@ -1,0 +1,21 @@
+[
+	{
+		"name": "Harvard Square Homeless Shelter",
+		"type_emergency": "true",
+		"sober": "true",
+		"not_sober": "false",
+		"gender_male": "true",
+		"gender_female": "true",
+		"gender_mixed": "true",
+		"phone_tollfree": "888-285-4038",
+		"phone": "617-547-2841",
+		"lottery": "14-night beds are given out in the morning between 7:30 a.m. and 8 a.m., emergency beds are given away over the phone at exactly 9:30 p.m. when the temperature is below 32 degrees F or there is a 50% or more chance of precipitation. Continue calling one of the numbers until getting through to a director.",
+		"address": "66 Winthrop Street, Cambridge, MA 02138",
+		"coordinates": "42.3717, -71.1199",
+		"family": "false",
+		"single": "true",
+		"hours": "7 PM to 8 AM, except on Saturday mornings when shelter remains open until 9 AM",
+		"accessible": "true",
+		"resources": "Customize this."
+	}
+]
