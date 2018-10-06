@@ -1,16 +1,23 @@
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDod66YZbbge66UKTTtOa69gOMIL1LXNxM",
+    authDomain: "bostonshelters.firebaseapp.com",
+    databaseURL: "https://bostonshelters.firebaseio.com",
+    projectId: "bostonshelters",
+    storageBucket: "bostonshelters.appspot.com",
+    messagingSenderId: "414085520378"
+};
+firebase.initializeApp(config);
 
-// Import Admin SDK
-var admin = require("firebase-admin");
-
-// Get a database reference to our posts
-var db = admin.database();
+// Import database
+var db = firebase.database();
 
 function searchByName() {
     // Declare variables
     var input, filter, ul, li, a, i;
-    input = document.getElementById("nameSearch");
+    input = $("#nameSearch")[0];
     filter = input.value.toUpperCase();
-    ul = document.getElementById("shelterNames");
+    ul = $("#shelterNames")[0];
     li = ul.getElementsByTagName("li");
 
     // Loop through all list items, and hide those who don't match the search query
@@ -25,13 +32,17 @@ function searchByName() {
 };
 
 function createShelterList() {
-	db.forEach(function(shelter) {
+	db.ref('shelters/').once('value').then(function(list) {
+    list.forEach(function(info) {
+        var shelter = info.val();
+		
 		var li = document.createElement("li");
 		var a = document.createElement("a");
-		var text = document.createTextNode(shelter);
+		var text = document.createTextNode(shelter.name);
 		a.appendChild(text);
-  		li.appendChild(a);
-		$("#shelterNames").appendChild(li);
+		li.appendChild(a);
+		$("#shelterNames")[0].appendChild(li);
+	    });
 	});
 };
 

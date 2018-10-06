@@ -3,13 +3,13 @@
     <head>
         <title>Search Boston Shelters</title>
         <link rel="stylesheet" href="style.css">
+        <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="require.js"></script>
-        <script src="script.js"></script>
     </head>
     <body>
         <div class="titleBar">
             <h1>Search Boston Shelters</h1>
+        </div>
         <div class="menuBar">
             <div class="searchBar">
                 <input type="text" id="nameSearch" onkeyup="searchByName()" placeholder="Search..">
@@ -41,17 +41,5 @@
             <p>Copyright 2018</p>
         </div>
     </body>
-    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDod66YZbbge66UKTTtOa69gOMIL1LXNxM",
-            authDomain: "bostonshelters.firebaseapp.com",
-            databaseURL: "https://bostonshelters.firebaseio.com",
-            projectId: "bostonshelters",
-            storageBucket: "bostonshelters.appspot.com",
-            messagingSenderId: "414085520378"
-        };
-        firebase.initializeApp(config);
-    </script>
+    <script src="script.js"></script>
 </html>
