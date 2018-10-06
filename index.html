@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Title in tab bar.</title>
+        <title>Search Boston Shelters</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div class="titleBar">
+            <h1>Search Boston Shelters</h1>
+            <input type="text" id="nameSearch" onkeyup="searchByName()" placeholder="Search..">
+            <ul id="shelterNames">
+                <li><a>HSHS</a></li>
+                <li><a>Shelter 2</a></li>
+            </ul>
+            <script>
+                function searchByName() {
+                    // Declare variables
+                    var input, filter, ul, li, a, i;
+                    input = document.getElementById("nameSearch");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("shelterNames");
+                    li = ul.getElementsByTagName("li");
+
+                    // Loop through all list items, and hide those who don't match the search query
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "block";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+            </script>
+        </div>
+        <div class="data">
+            
+        </div>
+        <div class="searchResults"> 
         </div>
         <div class="endingCredits">
             <p>Copyright 2018</p>
         </div>
     </body>
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDod66YZbbge66UKTTtOa69gOMIL1LXNxM",
+            authDomain: "bostonshelters.firebaseapp.com",
+            databaseURL: "https://bostonshelters.firebaseio.com",
+            projectId: "bostonshelters",
+            storageBucket: "bostonshelters.appspot.com",
+            messagingSenderId: "414085520378"
+        };
+        firebase.initializeApp(config);
+    </script>
 </html>
