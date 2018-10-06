@@ -10,16 +10,32 @@
     <body>
         <div class="titleBar">
             <h1>Search Boston Shelters</h1>
-            <input type="text" id="nameSearch" onkeyup="searchByName()" placeholder="Search..">
+        <div class="menuBar">
+            <div class="searchBar">
+                <input type="text" id="nameSearch" onkeyup="searchByName()" placeholder="Search..">
+            </div>
+            <div class="filters">
+                <ul>
+                    <li><input type="checkbox" value="genderFemale" id="filter-genderFemale"/>Female-only beds</li>
+                    <li><input type="checkbox" value="genderMale" id="filter-genderMale"/>Male-only beds</li>
+                    <li><input type="checkbox" value="genderMixed" id="filter-genderMixed"/>Gender-neutral beds</li>
+                    <li><input type="checkbox" value="sober" id="filter-sober"/>Dry/Sober</li>
+                    <li><input type="checkbox" value="notSober" id="filter-notSober"/>Wet/Not Sober</li>
+                    <li><input type="checkbox" value="typeEmergency" id="filter-typeEmergency"/>Emergency housing</li>
+                    <li><input type="checkbox" value="typeTransitional" id="filter-typeTransitional"/>Transitional housing</li>
+                    <li><input type="checkbox" value="typePermanent" id="filter-typePermanent"/>Permanent housing</li>
+                    <li><input type="checkbox" value="typeDomesticViolence" id="filter-typeDomesticViolence"/>Domestic violence housing</li>
+                    <li><input type="checkbox" value="typeAccessible" id="filter-typeAccessibilty"/>Wheelchair accessible</li>
+                </ul>
+            </div>
+        </div>
+        <div class="map">
+        </div>
+        <div class="searchResults"> 
             <ul id="shelterNames">
                 <li><a>HSHS</a></li>
                 <li><a>Shelter 2</a></li>
             </ul>
-        </div>
-        <div class="data">
-            
-        </div>
-        <div class="searchResults"> 
         </div>
         <div class="endingCredits">
             <p>Copyright 2018</p>
