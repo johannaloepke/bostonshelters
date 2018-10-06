@@ -1,5 +1,5 @@
-[
-	{
+{
+	"shelters": [{
 		"name": "Harvard Square Homeless Shelter",
 		"type_emergency": "true",
         "type_transitional": "true",
@@ -20,5 +20,5 @@
 		"hours": "7 PM to 8 AM, except on Saturday mornings when shelter remains open until 9 AM",
 		"accessible": "true",
 		"resources": "Customize this."
-	}
-]
+	}]
+}
