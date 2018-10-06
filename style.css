@@ -1,3 +1,21 @@
+.titleBar {
+    display: inline;
+}
 
-.titleBar input {
+.menuBar {
+    display: inline-block;
+    margin-left: 0;
+}
+
+.filters {
+    display: inline;
+    margin-left: 0;
+}
+
+.searchResults {
+    display: inline-block;
+}
+
+.endingCredits {
+    margin-top: 30%;
 }
