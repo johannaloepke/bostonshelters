@@ -46,4 +46,25 @@ function createShelterList() {
 	});
 };
 
+function filterShelterList(attribute) {
+    db.ref('shelters/').once('value').then(function(list) {
+        list.forEach(function(info) {
+            var shelter = info.val();
+            
+            if(!shelter.attribute) {
+                
+            }
+            
+            var li = document.createElement("li");
+            var a = document.createElement("a");
+            var text = document.createTextNode(shelter.name);
+            a.appendChild(text);
+		li.appendChild(a);
+		$("#shelterNames")[0].appendChild(li);
+	    });
+	});
+};
+
+
 createShelterList();
+filterShelterList();
