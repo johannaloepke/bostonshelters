@@ -3,6 +3,9 @@
     <head>
         <title>Search Boston Shelters</title>
         <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="require.js"></script>
+        <script src="script.js"></script>
     </head>
     <body>
         <div class="titleBar">
@@ -12,26 +15,6 @@
                 <li><a>HSHS</a></li>
                 <li><a>Shelter 2</a></li>
             </ul>
-            <script>
-                function searchByName() {
-                    // Declare variables
-                    var input, filter, ul, li, a, i;
-                    input = document.getElementById("nameSearch");
-                    filter = input.value.toUpperCase();
-                    ul = document.getElementById("shelterNames");
-                    li = ul.getElementsByTagName("li");
-
-                    // Loop through all list items, and hide those who don't match the search query
-                    for (i = 0; i < li.length; i++) {
-                        a = li[i].getElementsByTagName("a")[0];
-                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            li[i].style.display = "block";
-                        } else {
-                            li[i].style.display = "none";
-                        }
-                    }
-                }
-            </script>
         </div>
         <div class="data">
             
