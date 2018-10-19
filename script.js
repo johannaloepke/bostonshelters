@@ -12,6 +12,8 @@ firebase.initializeApp(config);
 // Import database
 var db = firebase.database();
 
+var filters = [];
+
 function searchByName() {
     // Declare variables
     var input, filter, ul, li, a, i;
@@ -32,39 +34,60 @@ function searchByName() {
 };
 
 function createShelterList() {
-	db.ref('shelters/').once('value').then(function(list) {
-    list.forEach(function(info) {
-        var shelter = info.val();
-		
-		var li = document.createElement("li");
-		var a = document.createElement("a");
-		var text = document.createTextNode(shelter.name);
-		a.appendChild(text);
-		li.appendChild(a);
-		$("#shelterNames")[0].appendChild(li);
-	    });
+	db.ref('shelters/shelters/').once('value').then(function(list) { // Get value of shelters dataset
+	    list.forEach(function(info) { // Loop through each shelter
+	        var shelter = info.val();
+			
+			var li = document.createElement("li");
+			var a = document.createElement("a");
+			var text = document.createTextNode(shelter.name);
+			a.appendChild(text);
+			li.appendChild(a);
+			$("#shelterNames")[0].appendChild(li); // Add the name of a shelter fromt the dataset to the visible list
+	 	});
 	});
 };
 
-function filterShelterList(attribute) {
-    db.ref('shelters/').once('value').then(function(list) {
-        list.forEach(function(info) {
+function filterShelterList(attribute, isChecked) {
+    db.ref('shelters/shelters/').once('value').then(function(list) { // Get value of shelters dataset
+	    var li = $("#shelterNames")[0].getElementsByTagName("li");
+		var i = 0;
+	    list.forEach(function(info) { // Loop through all shelters, and hide those who don't match the search query
             var shelter = info.val();
-            
-            if(!shelter.attribute) {
-                
-            }
-            
-            var li = document.createElement("li");
-            var a = document.createElement("a");
-            var text = document.createTextNode(shelter.name);
-            a.appendChild(text);
-		li.appendChild(a);
-		$("#shelterNames")[0].appendChild(li);
-	    });
+
+			console.log("checked:" +isChecked);
+			if (isChecked) {
+				console.log("attribute: "+shelter[attribute]);
+				li[i].style.display = shelter[attribute] ? "block" : "none"; // shelters with desired attribute are shown
+			}
+			else {
+				// display type should stay the same if shelter had an attribute that was unchecked
+				if (!shelter[attribute]) {
+					li[i].style.display = filters.every(function(checkedItem) { // Returns true if every checked filter is true of the given shelter
+						console.log(checkedItem);
+						return shelter[checkedItem];
+					}) ? "block" : "none";
+				}
+			}
+			++i; // Increase the index of the shelter
+        });
 	});
 };
 
 
 createShelterList();
-filterShelterList();
+
+$(':checkbox').change(function(){
+    var search_item = $(this)[0].value;
+    if($(this).is(':checked')) {
+    	filters.push(search_item); // Add filtered item to list
+        filterShelterList(search_item, true);
+    } else {
+        for (var i = filters.length-1; i>=0; i--) { // Remove item from fiter list
+		    if (filters[i] === search_item) {
+		        filters.splice(i, 1); 
+		    }
+		}
+        filterShelterList(search_item, false);
+    }
+});
