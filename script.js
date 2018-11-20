@@ -1,17 +1,3 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyDod66YZbbge66UKTTtOa69gOMIL1LXNxM",
-    authDomain: "bostonshelters.firebaseapp.com",
-    databaseURL: "https://bostonshelters.firebaseio.com",
-    projectId: "bostonshelters",
-    storageBucket: "bostonshelters.appspot.com",
-    messagingSenderId: "414085520378"
-};
-firebase.initializeApp(config);
-
-// Import database
-var db = firebase.database();
-
 var filters = [];
 
 function searchByName() {
@@ -34,7 +20,7 @@ function searchByName() {
 };
 
 function createShelterList() {
-	db.ref('shelters/shelters/').once('value').then(function(list) { // Get value of shelters dataset
+	db.once('value').then(function(list) { // Get value of shelters dataset
 	    list.forEach(function(info) { // Loop through each shelter
 	        var shelter = info.val();
 			
@@ -49,7 +35,7 @@ function createShelterList() {
 };
 
 function filterShelterList(attribute, isChecked) {
-    db.ref('shelters/shelters/').once('value').then(function(list) { // Get value of shelters dataset
+    db.once('value').then(function(list) { // Get value of shelters dataset
 	    var li = $("#shelterNames")[0].getElementsByTagName("li");
 		var i = 0;
 	    list.forEach(function(info) { // Loop through all shelters, and hide those who don't match the search query
@@ -73,7 +59,6 @@ function filterShelterList(attribute, isChecked) {
         });
 	});
 };
-
 
 createShelterList();
 

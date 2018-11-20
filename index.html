@@ -5,6 +5,54 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type='text/javascript'>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDod66YZbbge66UKTTtOa69gOMIL1LXNxM",
+            authDomain: "bostonshelters.firebaseapp.com",
+            databaseURL: "https://bostonshelters.firebaseio.com",
+            projectId: "bostonshelters",
+            storageBucket: "bostonshelters.appspot.com",
+            messagingSenderId: "414085520378"
+        };
+        firebase.initializeApp(config);
+
+        // Import database
+        var db = firebase.database().ref('shelters/shelters/');
+        </script>
+        <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCyNEu37RX2wOdReTH3ZrFMlghHr8nfn6M&callback=initMap" type="text/javascript"></script>
+        <script type="text/javascript">
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: 42.3601, lng: -71.0589},
+                  zoom: 22.0,
+                  panControl: false,
+                  gestureHandling: 'greedy',
+                  disableDefaultUI: true,
+                  disableDoubleClickZoom: true,
+                });
+
+                db.once('value').then(function(list) {
+                    list.forEach(function(shelter) {
+                        var shelterCoords = shelter.val().coordinates;
+                        var latitude = parseFloat(shelterCoords.split(", ")[0]);
+                        var longitude = parseFloat(shelterCoords.split(", ")[1]);
+                        console.log(latitude + "," + longitude);
+                        var marker = new google.maps.Marker({
+                            position: {lat:latitude, lng:longitude},
+                            map: map,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 0
+                            }
+                        });
+                        console.log(marker);
+                    });
+                });
+
+                google.maps.event.addDomListener(window, "load", initMap);
+            }
+        </script>
     </head>
     <body>
         <div class="titleBar">
@@ -29,11 +77,12 @@
                 </ul>
             </div>
         </div>
-        <div class="map">
-        </div>
         <div class="searchResults"> 
             <ul id="shelterNames">
             </ul>
+        </div>
+        <div class="map">
+            <iframe id="map" src="https://www.google.com.qa/maps/d/embed?mid=1kiBMnOjPT-3PFCIWd5k6Sah-xepICSnp" width="640" height="480"></iframe>
         </div>
         <div class="endingCredits">
             <p>Copyright 2018</p>
