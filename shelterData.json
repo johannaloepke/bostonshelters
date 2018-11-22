@@ -2,6 +2,7 @@
 	"shelters": [
 	{
 		"name": "Harvard Square Homeless Shelter",
+		"description": "N/A",
 		"type_emergency": true,
         "type_transitional": true,
         "type_domesticviolence": false,
@@ -20,10 +21,11 @@
 		"single": true,
 		"hours": "7 PM to 8 AM, except on Saturday mornings when shelter remains open until 9 AM",
 		"accessible": true,
-		"resources": "Customize this."
+		"resources": "N/A"
 	},
     {
 		"name": "RESPOND Inc. Emergency Shelter",
+		"description": "Safe, confidential 8-bedroom shelter in Somerville. Services available 24 hours a day, 365 days a year. Average length of stay for residents is 4 months.",
 		"type_emergency": true,
         "type_transitional": true,
         "type_domesticviolence": true,
@@ -35,9 +37,9 @@
 		"gender_mixed": false,
 		"phone_tollfree": "",
 		"phone": "617-623-5900",
-		"lottery": "Safe, confidential 8-bedroom shelter in Somerville. Services available 24 hours a day, 365 days a year. Average length of stay for residents is 4 months.",
-		"address": "PO Box 555 Somerville, MA 02143",
-		"coordinates": "",
+		"lottery": "N/A",
+		"address": "Address is not public, please call or send mail to PO Box 555 Somerville, MA 02143",
+		"coordinates": "42.3875968, -71.0994968",
 		"family": true,
 		"single": true,
 		"hours": "Our business office hours are 9:00 AM to 5:00 PM EST, Monday to Friday. Programs and Services staff are available 24/7 via the crisis hotline.",

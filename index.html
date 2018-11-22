@@ -18,33 +18,49 @@
         firebase.initializeApp(config);
 
         // Import database
-        var db = firebase.database().ref('shelters/shelters/');
+        var db = firebase.database().ref('shelters/');
         </script>
         <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCyNEu37RX2wOdReTH3ZrFMlghHr8nfn6M&callback=initMap" type="text/javascript"></script>
         <script type="text/javascript">
             function initMap() {
                 var map = new google.maps.Map(document.getElementById('map'), {
                   center: {lat: 42.3601, lng: -71.0589},
-                  zoom: 22.0,
+                  zoom: 12.0,
                   panControl: false,
                   gestureHandling: 'greedy',
                   disableDefaultUI: true,
-                  disableDoubleClickZoom: true,
+                  disableDoubleClickZoom: false,
                 });
 
                 db.once('value').then(function(list) {
-                    list.forEach(function(shelter) {
-                        var shelterCoords = shelter.val().coordinates;
+                    list.forEach(function(item) {
+                        var shelter = item.val();
+                        var shelterCoords = shelter.coordinates;
                         var latitude = parseFloat(shelterCoords.split(", ")[0]);
                         var longitude = parseFloat(shelterCoords.split(", ")[1]);
-                        console.log(latitude + "," + longitude);
+
+                        var contentString = '<div id="content">'+
+                            '<div id="siteNotice">'+
+                            '</div>'+
+                            '<h1 id="firstHeading" class="firstHeading">'+shelter.name+'</h1>'+
+                            '<div id="bodyContent">'+
+                            '<p>'+shelter.description+'</p>'+
+                            '<p><b>Address: </b>'+shelter.address+'</p>'+
+                            '<p><b>Hours: </b>'+shelter.hours+'</p>'+
+                            '<p><b>Phone: </b>'+shelter.phone+'</p>'+
+                            '<p><b>Lottery Information: </b>'+shelter.lottery+'</p>'+
+                            '<p><b>Other Resources: </b>'+shelter.resources+'</p>'+
+                            '</div>'+
+                            '</div>';
+
+                        var infowindow = new google.maps.InfoWindow({content: contentString});    
+
                         var marker = new google.maps.Marker({
                             position: {lat:latitude, lng:longitude},
-                            map: map,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                scale: 0
-                            }
+                            map: map
+                        });
+                        marker.addListener('click', function() {
+                            infowindow.open(map, marker);
                         });
                         console.log(marker);
                     });
@@ -81,9 +97,7 @@
             <ul id="shelterNames">
             </ul>
         </div>
-        <div class="map">
-            <iframe id="map" src="https://www.google.com.qa/maps/d/embed?mid=1kiBMnOjPT-3PFCIWd5k6Sah-xepICSnp" width="640" height="480"></iframe>
-        </div>
+        <div id="map" style="width:600px; height:480px"></div>
         <div class="endingCredits">
             <p>Copyright 2018</p>
         </div>
