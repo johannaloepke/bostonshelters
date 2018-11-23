@@ -1,4 +1,5 @@
-var filters = [];
+var FILTERS = [];
+var HIDDEN_MARKERS = {};
 
 function searchByName() {
     // Declare variables
@@ -20,7 +21,7 @@ function searchByName() {
 };
 
 function createShelterList() {
-	db.once('value').then(function(list) { // Get value of shelters dataset
+	DB.once('value').then(function(list) { // Get value of shelters dataset
 	    list.forEach(function(info) { // Loop through each shelter
 	        var shelter = info.val();
 			
@@ -35,22 +36,26 @@ function createShelterList() {
 };
 
 function filterShelterList(attribute, isChecked) {
-    db.once('value').then(function(list) { // Get value of shelters dataset
+    DB.once('value').then(function(list) { // Get value of shelters dataset
 	    var li = $("#shelterNames")[0].getElementsByTagName("li");
 		var i = 0;
 	    list.forEach(function(info) { // Loop through all shelters, and hide those who don't match the search query
             var shelter = info.val();
 
-			console.log("checked:" +isChecked);
 			if (isChecked) {
-				console.log("attribute: "+shelter[attribute]);
-				li[i].style.display = shelter[attribute] ? "block" : "none"; // shelters with desired attribute are shown
+				if (shelter[attribute]) {
+					li[i].style.display = "block"; // Show the shelter
+					if (!MARKERS[shelter.name]) { flipShelterMarker(shelter.name); }
+				}
+				else {
+					li[i].style.display = "none"; // Hide the shelter
+					flipShelterMarker(shelter.name);
+				}
 			}
 			else {
 				// display type should stay the same if shelter had an attribute that was unchecked
 				if (!shelter[attribute]) {
-					li[i].style.display = filters.every(function(checkedItem) { // Returns true if every checked filter is true of the given shelter
-						console.log(checkedItem);
+					li[i].style.display = FILTERS.every(function(checkedItem) { // Returns true if every checked filter is true of the given shelter
 						return shelter[checkedItem];
 					}) ? "block" : "none";
 				}
@@ -58,19 +63,36 @@ function filterShelterList(attribute, isChecked) {
 			++i; // Increase the index of the shelter
         });
 	});
+	
+	clearMarkers();
+	showMarkers();
 };
+
+function flipShelterMarker(name) {
+	if (MARKERS[name]) {
+		HIDDEN_MARKERS[name] = MARKERS[name];
+		delete MARKERS[name];
+		console.log(HIDDEN_MARKERS);
+	}
+	else {
+		var marker = HIDDEN_MARKERS[name];
+		MARKERS[name] = marker;
+		console.log("Markers: "+MARKERS);
+	}
+}
 
 createShelterList();
 
 $(':checkbox').change(function(){
     var search_item = $(this)[0].value;
     if($(this).is(':checked')) {
-    	filters.push(search_item); // Add filtered item to list
+    	FILTERS.push(search_item); // Add filtered item to list
         filterShelterList(search_item, true);
-    } else {
-        for (var i = filters.length-1; i>=0; i--) { // Remove item from fiter list
-		    if (filters[i] === search_item) {
-		        filters.splice(i, 1); 
+    } 
+    else {
+        for (var i = FILTERS.length-1; i>=0; i--) { // Remove item from fiter list
+		    if (FILTERS[i] === search_item) {
+		        FILTERS.splice(i, 1); 
 		    }
 		}
         filterShelterList(search_item, false);
