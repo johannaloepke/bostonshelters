@@ -1,5 +1,4 @@
 var FILTERS = [];
-var HIDDEN_MARKERS = {};
 
 function searchByName() {
     // Declare variables
@@ -43,14 +42,10 @@ function filterShelterList(attribute, isChecked) {
             var shelter = info.val();
 
 			if (isChecked) {
-				if (shelter[attribute]) {
-					li[i].style.display = "block"; // Show the shelter
-					if (!MARKERS[shelter.name]) { flipShelterMarker(shelter.name); }
-				}
-				else {
-					li[i].style.display = "none"; // Hide the shelter
-					flipShelterMarker(shelter.name);
-				}
+				// if shelter has certain checked attribute, show it, otherwise hide
+				li[i].style.display = shelter[attribute] ? "block" : "none";
+				// trigger hiding or showing marker
+				showOrHide(li[i].style.display, shelter.name);
 			}
 			else {
 				// display type should stay the same if shelter had an attribute that was unchecked
@@ -58,27 +53,19 @@ function filterShelterList(attribute, isChecked) {
 					li[i].style.display = FILTERS.every(function(checkedItem) { // Returns true if every checked filter is true of the given shelter
 						return shelter[checkedItem];
 					}) ? "block" : "none";
+					// trigger hiding or showing marker
+					showOrHide(li[i].style.display, shelter.name);
 				}
 			}
 			++i; // Increase the index of the shelter
         });
 	});
-	
-	clearMarkers();
-	showMarkers();
 };
 
-function flipShelterMarker(name) {
-	if (MARKERS[name]) {
-		HIDDEN_MARKERS[name] = MARKERS[name];
-		delete MARKERS[name];
-		console.log(HIDDEN_MARKERS);
-	}
-	else {
-		var marker = HIDDEN_MARKERS[name];
-		MARKERS[name] = marker;
-		console.log("Markers: "+MARKERS);
-	}
+// triggers an event to either show or hide map marker
+function showOrHide(displayType, shelterName) {
+	var event = new CustomEvent(displayType == "block" ? "showMarker" : "hideMarker", { "detail": shelterName });
+	document.dispatchEvent(event);
 }
 
 createShelterList();
