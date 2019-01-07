@@ -1,3 +1,19 @@
+ul {
+  list-style-type: none;
+}
+
+li {
+	font-size:20px;
+}
+
+input[type="text"] {
+    font-size:24px;
+}
+
+input[type="checkbox"] {
+    font-size:50px;
+}
+
 .titleBar {
     display: inline;
 }
@@ -13,9 +29,10 @@
 }
 
 .searchResults {
-    display: inline-block;
+    display: inline;
 }
 
-.endingCredits {
-    margin-top: 30%;
+#map {
+	float: right;
+	margin-top: 0%;
 }

@@ -1,5 +1,6 @@
 var FILTERS = [];
 
+// based on search query text, filter out the items that don't match
 function searchByName() {
     // Declare variables
     var input, filter, ul, li, a, i;
@@ -19,6 +20,7 @@ function searchByName() {
     }
 };
 
+// gets initial list of all the shelters in DB
 function createShelterList() {
 	DB.once('value').then(function(list) { // Get value of shelters dataset
 	    list.forEach(function(info) { // Loop through each shelter
@@ -34,6 +36,7 @@ function createShelterList() {
 	});
 };
 
+// based on checkboxes, filter out the items that don't have the desired attribute
 function filterShelterList(attribute, isChecked) {
     DB.once('value').then(function(list) { // Get value of shelters dataset
 	    var li = $("#shelterNames")[0].getElementsByTagName("li");
